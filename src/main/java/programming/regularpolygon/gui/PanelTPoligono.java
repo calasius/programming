@@ -36,7 +36,7 @@ public class PanelTPoligono extends JPanel {
 	private Polygon2D poligono ;
 	
 	public PanelTPoligono() {
-		curvaCerrada = EnumFiguras.ELLIPSE.getCurva();
+		curvaCerrada = EnumFiguras.CIRCUMFERENCIA.getCurva();
 		if (curvaCerrada.isPoligono()) {
 			poligono = curvaCerrada.getPoligonoAleatorio(curvaCerrada.cantidadLados());
 		} else {
