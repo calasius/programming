@@ -1,9 +1,9 @@
 package programming.partition;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.commons.math3.primes.Primes;
 import org.apache.commons.math3.util.ArithmeticUtils;
@@ -14,7 +14,9 @@ import com.google.common.collect.Sets;
 public class BestPartition {
 
 	public static List<Integer> bestPartition(int n) {
-		
+		BigInteger newMCM = null;
+		BigInteger oldMCM = null;
+		int sum = 0;
 		List<List<Integer>> b = initializePartitions(n);
 		List<BigInteger> L = initializeMinCommonMultiplier(n);
 		int i = 1;
@@ -23,27 +25,38 @@ public class BestPartition {
 		while (i < n) {
 			while(p < n) {
 				if (Primes.isPrime(p)) {
-					if (p + i + 1 <= n && coprime(p, b.get(i))) {
-						updatePartition(b, i, p);
+					sum = p + i + 1;
+					if (sum <= n && coprime(p, b.get(i))) {
+						newMCM = L.get(i).multiply(BigInteger.valueOf(p));
+						oldMCM = L.get(sum-1);
+						if (newMCM.compareTo(oldMCM) > 0) {
+							L.set(sum-1, newMCM);
+							updatePartition(b, i, p);
+						}
 					} 
 				} else if (p > 1) {
 					List<Integer> factors = Primes.primeFactors(p);
 					int r = factors.size();
+					sum = p + i + 1;
 					if (powerOfPrime(factors)) {
-						if (p + i + 1 <= n && coprime(p, b.get(i))) {
-							if (L.get(i).multiply(BigInteger.valueOf(p))
-									.compareTo(L.get(i + p - 1)) > 0) {
+						if (sum <= n && coprime(p, b.get(i))) {
+							newMCM = L.get(i).multiply(BigInteger.valueOf(p));
+							oldMCM = L.get(sum-1);
+							if (newMCM.compareTo(oldMCM) > 0) {
+								L.set(sum-1, newMCM);
 								updatePartition(b, i, p);
-								L.set(i + p - 1, L.get(i).multiply(BigInteger.valueOf(p)));
 							}
-						} else if (p + i + 1 <= n){
+						} else if (sum <= n){
 							Integer q = findNoComprime(b, i, p);
 							List<Integer> factorsq = Primes.primeFactors(q);
 							int s = factorsq.size();
-							if (r > s && i + p - q + 1 <= n) {
-								if (L.get(i).multiply(BigInteger.valueOf(factors.get(0)).pow(r-s)).compareTo(L.get(i + p - q - 1)) > 0) {
+							sum = i + p - q + 1;
+							if (r > s && sum <= n) {
+								newMCM = L.get(i).multiply(BigInteger.valueOf(factors.get(0)).pow(r-s));
+								oldMCM = L.get(sum-1);
+								if (newMCM.compareTo(oldMCM) > 0) {
+									L.set(sum-1, newMCM);
 									updatePartition(b, i, p, q);
-									L.set(i + p - q - 1, L.get(i).multiply(BigInteger.valueOf(factors.get(0)).pow(r-s)));
 								}
 							}
 						}				
@@ -55,9 +68,17 @@ public class BestPartition {
 			p = 1;
 		}
 
-		System.out.println(L);
-		return b.get(n - 2);
+		System.out.println(L.get(n-1));
+		Collections.sort(b.get(n - 1));
+		return b.get(n - 1);
+	}
 
+	private static BigInteger multiply(List<Integer> list) {
+		BigInteger res = BigInteger.valueOf(1);
+		for (Integer integer : list) {
+			res = res.multiply(BigInteger.valueOf(integer));
+		}
+		return res;
 	}
 
 	private static Integer findNoComprime(List<List<Integer>> b, int i, int p) {
@@ -71,16 +92,16 @@ public class BestPartition {
 	}
 
 	private static void updatePartition(List<List<Integer>> b, int i, int p) {
-		b.get(i+p-1).clear();
-		b.get(i+p-1).addAll(b.get(i));
-		b.get(i+p-1).add(p);
+		b.set(i+p, Lists.<Integer> newArrayList());
+		b.get(i+p).addAll(b.get(i));
+		b.get(i+p).add(p);
 	}
 	
 	private static void updatePartition(List<List<Integer>> b, int i, int p, int q) {
-		b.get(i+p-q-1).clear();
-		b.get(i+p-q-1).addAll(b.get(i));
-		b.get(i+p-q-1).remove(Integer.valueOf(q));
-		b.get(i+p-q-1).add(p);
+		b.set(i+p-q, Lists.<Integer> newArrayList());
+		b.get(i+p-q).addAll(b.get(i));
+		b.get(i+p-q).remove(Integer.valueOf(q));
+		b.get(i+p-q).add(p);
 	}
 
 	private static List<BigInteger> initializeMinCommonMultiplier(int n) {
