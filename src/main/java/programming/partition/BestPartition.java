@@ -1,4 +1,4 @@
-package pruebas;
+package programming.partition;
 
 import java.math.BigInteger;
 import java.util.List;

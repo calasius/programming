@@ -1,4 +1,4 @@
-package pruebas;
+package programming;
 
 /**
  * Hello world!
