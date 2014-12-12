@@ -20,8 +20,8 @@ public class BestPartition {
 		int i = 1;
 		int p = 1;
 
-		while (i <= n) {
-			while(p <= n) {
+		while (i < n) {
+			while(p < n) {
 				if (Primes.isPrime(p)) {
 					if (p + i + 1 <= n && coprime(p, b.get(i))) {
 						updatePartition(b, i, p);
@@ -55,13 +55,19 @@ public class BestPartition {
 			p = 1;
 		}
 
-		System.out.println(L.get(n-1));
-		return b.get(n - 1);
+		System.out.println(L);
+		return b.get(n - 2);
 
 	}
 
 	private static Integer findNoComprime(List<List<Integer>> b, int i, int p) {
-		return b.get(i).stream().filter(k -> ArithmeticUtils.gcd(p, k) != 1).collect(Collectors.toList()).get(0);
+		Integer res = 0;
+		for (Integer k : b.get(i)) {
+			if (ArithmeticUtils.gcd(p, k) != 1) {
+				res =  k;
+			}
+		}
+		return res;
 	}
 
 	private static void updatePartition(List<List<Integer>> b, int i, int p) {
