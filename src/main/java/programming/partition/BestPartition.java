@@ -23,10 +23,10 @@ public class BestPartition {
 		int p = 1;
 
 		while (i < n) {
-			while(p < n) {
-				if (Primes.isPrime(p)) {
+			while(p < n-i) {
+				if (Primes.isPrime(p) || p == 1) {
 					sum = p + i + 1;
-					if (sum <= n && coprime(p, b.get(i))) {
+					if (coprime(p, b.get(i))) {
 						newMCM = L.get(i).multiply(BigInteger.valueOf(p));
 						oldMCM = L.get(sum-1);
 						if (newMCM.compareTo(oldMCM) > 0) {
@@ -39,7 +39,7 @@ public class BestPartition {
 					int r = factors.size();
 					sum = p + i + 1;
 					if (powerOfPrime(factors)) {
-						if (sum <= n && coprime(p, b.get(i))) {
+						if (coprime(p, b.get(i))) {
 							newMCM = L.get(i).multiply(BigInteger.valueOf(p));
 							oldMCM = L.get(sum-1);
 							if (newMCM.compareTo(oldMCM) > 0) {
@@ -51,7 +51,7 @@ public class BestPartition {
 							List<Integer> factorsq = Primes.primeFactors(q);
 							int s = factorsq.size();
 							sum = i + p - q + 1;
-							if (r > s && sum <= n) {
+							if (r > s) {
 								newMCM = L.get(i).multiply(BigInteger.valueOf(factors.get(0)).pow(r-s));
 								oldMCM = L.get(sum-1);
 								if (newMCM.compareTo(oldMCM) > 0) {
@@ -92,13 +92,13 @@ public class BestPartition {
 	}
 
 	private static void updatePartition(List<List<Integer>> b, int i, int p) {
-		b.set(i+p, Lists.<Integer> newArrayList());
+		b.get(i+p).clear();
 		b.get(i+p).addAll(b.get(i));
 		b.get(i+p).add(p);
 	}
 	
 	private static void updatePartition(List<List<Integer>> b, int i, int p, int q) {
-		b.set(i+p-q, Lists.<Integer> newArrayList());
+		b.get(i+p-q).clear();
 		b.get(i+p-q).addAll(b.get(i));
 		b.get(i+p-q).remove(Integer.valueOf(q));
 		b.get(i+p-q).add(p);
