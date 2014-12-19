@@ -147,7 +147,7 @@ public class BestPartition {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(bestPartition(100));
+		System.out.println(bestPartition(1000));
 	}
 
 }

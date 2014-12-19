@@ -61,7 +61,7 @@ public class PanelTPoligono extends JPanel {
 		frame.setSize(500, 500);
 		frame.setVisible(true);
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TPoligonoTask(panel), 0, 500);
+		timer.scheduleAtFixedRate(new TPoligonoTask(panel), 0, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
