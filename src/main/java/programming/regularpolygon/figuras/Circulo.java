@@ -44,17 +44,14 @@ public class Circulo extends Circle2D  implements CurvaCerrada {
 		poligono = poligono.transform(tra);
 		return poligono ;
 	}
-	@Override
 	public List<Point2D> calcularInterseccion(Point2D p1, Point2D p2) {
 		LinearShape2D line = new StraightLine2D(p1,p2);
 		return (List<Point2D>) intersections(line);
 	}
-	@Override
 	public boolean isPoligono() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	@Override
 	public int cantidadLados() {
 		// TODO Auto-generated method stub
 		return 0;

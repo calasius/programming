@@ -20,7 +20,6 @@ public class Poligono extends SimplePolygon2D implements CurvaCerrada {
 		super(puntos);
 	}
 
-	@Override
 	public Polygon2D getPoligonoAleatorio(int cantVertices) {
 		List<Integer> indices = new ArrayList<Integer>();
 		List<Point2D> puntosPoligono = new ArrayList<Point2D>();
@@ -38,7 +37,6 @@ public class Poligono extends SimplePolygon2D implements CurvaCerrada {
 		return new SimplePolygon2D(puntosPoligono);
 	}
 
-	@Override
 	public List<Point2D> calcularInterseccion(Point2D p1, Point2D p2) {
 		LinearShape2D line = new StraightLine2D(p1,p2);
 		List<Point2D> res = new ArrayList<Point2D>();
@@ -56,19 +54,16 @@ public class Poligono extends SimplePolygon2D implements CurvaCerrada {
 		return res ;
 	}
 
-	@Override
 	public LinearRing2D asPolyline(int vertexNumber) {
 		// TODO Auto-generated method stub
 		return super.getRing();
 	}
 
-	@Override
 	public boolean isPoligono() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	@Override
 	public int cantidadLados() {
 		// TODO Auto-generated method stub
 		return vertexNumber();

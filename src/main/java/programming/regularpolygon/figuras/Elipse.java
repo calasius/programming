@@ -20,7 +20,6 @@ public class Elipse extends Ellipse2D implements CurvaCerrada {
 	}
 	
 	
-	@Override
 	public Polygon2D getPoligonoAleatorio(int cantVertices) {
 		// TODO Auto-generated method stub
 		LinearRing2D polyLine = asPolyline(3*cantVertices);
@@ -40,7 +39,6 @@ public class Elipse extends Ellipse2D implements CurvaCerrada {
 		return new SimplePolygon2D(puntosPoligono);
 	}
 
-	@Override
 	public List<Point2D> calcularInterseccion(Point2D p1, Point2D p2) {
 		// TODO Auto-generated method stub
 		LinearShape2D line = new StraightLine2D(p1,p2);
@@ -48,14 +46,12 @@ public class Elipse extends Ellipse2D implements CurvaCerrada {
 	}
 
 
-	@Override
 	public boolean isPoligono() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 
-	@Override
 	public int cantidadLados() {
 		// TODO Auto-generated method stub
 		return 0;
