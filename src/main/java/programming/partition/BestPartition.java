@@ -1,15 +1,14 @@
 package programming.partition;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.apache.commons.math3.primes.Primes;
+import org.apache.commons.math3.util.ArithmeticUtils;
+
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.commons.math3.primes.Primes;
-import org.apache.commons.math3.util.ArithmeticUtils;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class BestPartition {
 
@@ -147,7 +146,7 @@ public class BestPartition {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(bestPartition(100));
+        System.out.println(bestPartition(100));
 	}
 
 }
