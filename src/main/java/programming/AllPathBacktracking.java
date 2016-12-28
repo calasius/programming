@@ -8,7 +8,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -58,23 +57,31 @@ public class AllPathBacktracking
     }
 
     public static void main(String... args) {
+
+        for (int i = 5; i < 100; i++) {
+            UndirectedGraph<Integer, DefaultEdge> g = createCompleteGraph(i);
+            Long begin = System.currentTimeMillis();
+            Backtracking<UndirectedGraph<Integer, DefaultEdge>, Integer> backtracking = new AllPathBacktracking(g, 4);
+            List<List<Integer>> solutions = backtracking.backtrack();
+            Long end = System.currentTimeMillis();
+            System.out.print(i + "," + solutions.size() + "," + (end - begin));
+            System.out.println();
+        }
+    }
+
+    private static UndirectedGraph<Integer, DefaultEdge> createCompleteGraph(int n) {
         UndirectedGraph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
 
-        g.addVertex(1);
-        g.addVertex(2);
-        g.addVertex(3);
-        g.addVertex(4);
+        for (int i = 0; i < n; i++) {
+            g.addVertex(i);
+        }
 
-        g.addEdge(1, 2);
-        g.addEdge(1, 3);
-        g.addEdge(2, 4);
-        g.addEdge(3, 4);
-        g.addEdge(2, 3);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                g.addEdge(i, j);
+            }
+        }
 
-        Backtracking<UndirectedGraph<Integer, DefaultEdge>, Integer> backtracking = new AllPathBacktracking(g, 4);
-
-        List<List<Integer>> solutions = backtracking.backtrack();
-
-        System.out.println(solutions);
+        return g;
     }
 }
