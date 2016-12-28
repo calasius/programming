@@ -21,7 +21,6 @@ public class RectangleBST {
         this.x_intervals = new IntervalBST();
         this.y_intervals = new IntervalBST();
 
-
         for (Rectangle2D rectangle : rectangles) {
             Integer rectangleId = rectangle.hashCode();
             this.rectanglesById.put(rectangle.hashCode(), rectangle);
@@ -58,7 +57,7 @@ public class RectangleBST {
         rectangles.add(new Rectangle2D(5.0, 2.0, 2, 2));
         rectangles.add(new Rectangle2D(1.0, 2.0, 3, 3));
         RectangleBST rectangleBST = new RectangleBST(rectangles);
-        List<Rectangle2D> intersects = rectangleBST.find(2.5, 2.5);
+        List<Rectangle2D> intersects = rectangleBST.find(2.5, 5.5);
 
         for (Rectangle2D rectangle : intersects) {
             System.out.println(
