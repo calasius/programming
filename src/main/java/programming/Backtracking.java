@@ -31,9 +31,12 @@ public abstract class Backtracking<Structure, Element> {
                     solutions.add(Lists.newArrayList(partialSolution));
                     unmakeLastMove(partialSolution);
                 } else {
-                    CandidatesIterator newIterator = new CandidatesIterator(constructCandidates(partialSolution));
-                    currentIterator = newIterator;
-                    stackCandidates.push(newIterator);
+                    List<Element> candidates = constructCandidates(partialSolution);
+                    if (!candidates.isEmpty()) {
+                        CandidatesIterator newIterator = new CandidatesIterator(candidates);
+                        currentIterator = newIterator;
+                        stackCandidates.push(newIterator);
+                    }
                 }
             } else {
                 stackCandidates.pop();
