@@ -10,9 +10,7 @@ import org.jgrapht.alg.NeighborIndex;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by claudio on 12/28/16.
@@ -105,8 +103,8 @@ public class AllPathBacktracking
             System.out.println("Sin boost " + i + " = " + (end - begin));
 
             g = createTree(i, 3);
-            backtracking = new AllPathBacktracking(g, 9, true);
             begin = System.currentTimeMillis();
+            backtracking = new AllPathBacktracking(g, 9, true);
             solutions = backtracking.backtrack();
             end = System.currentTimeMillis();
 
@@ -182,14 +180,20 @@ public class AllPathBacktracking
         }
 
 
-        for (Integer vertex : cutpoints) {
+        Iterator<Integer> it = cutpoints.iterator();
+        for (int i = 0; i < cutpoints.size() / 20; i++) {
+            Integer vertex = it.next();
             if (hasSingleMemberConnectedComponent(neighborIndex, vertex)) {
                 connectedComponentsByCutpoint.put(vertex, singleMemberConnectedComponents(neighborIndex, vertex, g));
             } else {
-                g.removeVertex(vertex);
-                ConnectivityInspector<Integer, DefaultEdge> connectivityInspector = new ConnectivityInspector<Integer, DefaultEdge>(g);
-                connectedComponentsByCutpoint.put(vertex, connectivityInspector.connectedSets());
-                reconstrucGraph(vertex, neighborsByCutpoint.get(vertex), g);
+                Random r = new Random(System.currentTimeMillis());
+                Float p = r.nextFloat();
+                if (p > 0.9) {
+                    g.removeVertex(vertex);
+                    ConnectivityInspector<Integer, DefaultEdge> connectivityInspector = new ConnectivityInspector<Integer, DefaultEdge>(g);
+                    connectedComponentsByCutpoint.put(vertex, connectivityInspector.connectedSets());
+                    reconstrucGraph(vertex, neighborsByCutpoint.get(vertex), g);
+                }
             }
         }
 
