@@ -10,16 +10,16 @@ import java.util.*;
 public class AngryChildren2 {
 
     public static void main(String ... args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File("src/main/resources/test1"));
+        Scanner scanner = new Scanner("src/main/resources/AngryChildren2/test1");
 
         int N = scanner.nextInt();
         int K = scanner.nextInt();
 
-        int[] numbers = new int[N];
-        int[] diff = new int[N-K+1];
+        long[] numbers = new long[N];
+        long[] diff = new long[N-K+1];
 
         for(int i = 0; i < N; i++) {
-            numbers[i] = scanner.nextInt();
+            numbers[i] = scanner.nextLong();
         }
 
         Arrays.sort(numbers);
@@ -30,13 +30,13 @@ public class AngryChildren2 {
             }
         }
 
-        int res = diff[0];
+        long res = diff[0];
 
-        for (int i = 1; i < N - K ; i++) {
+        for (int i = 1; i <= N - K ; i++) {
             diff[i] = diff[i-1];
             for (int j = i; j < K+i-1; j++) {
-                diff[i] -= numbers[j] - numbers[K*(i-1)];
-                diff[i] += numbers[K+i-1] - numbers[j];
+                diff[i] -= (numbers[j] - numbers[i-1]);
+                diff[i] += (numbers[K+i-1] - numbers[j]);
             }
             if (diff[i] < res) {
                 res = diff[i];
