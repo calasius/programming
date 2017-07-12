@@ -3,6 +3,7 @@ package programming;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import programming.hackersrank.AngryChildren2;
 
 /**
  * Unit test for simple App.
@@ -34,5 +35,9 @@ public class AppTest
     public void testApp()
     {
         assertTrue( true );
+    }
+
+    public void testGetA() {
+        long[] numbers = {1,2,3,4,6,8,9};
     }
 }
