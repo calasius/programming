@@ -1,47 +1,55 @@
 package programming.hackersrank;
 
-import com.google.common.collect.Lists;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
-/**
- * Created by claudio on 7/14/17.
- */
+/** Created by claudio on 7/14/17. */
 public class CoinChange {
 
-    public static void findSolution(int number, int[] coins) {
+  public static long findSolution(int number, int[] coins) {
 
-        List<List<List<Integer>>> partialSolutions = new ArrayList<>();
-        List<Integer> firstSolution = new ArrayList<>();
-        firstSolution.add(1);
-        List<List<Integer>> solution = new ArrayList<>();
-        solution.add(firstSolution);
+    Arrays.sort(coins);
 
-        for (int i = 2; i <= number; i++) {
-            List<List<Integer>> actual = new ArrayList<>();
-            List<List<Integer>> previous = partialSolutions.get(i-1);
-            for (List<Integer> sol : previous) {
+    long[][] partialSolutions = new long[number + 1][coins.length + 1];
 
-            }
+    for (int i = 0; i < coins.length; ++i) {
+      if (coins[i] <= number) {
+        partialSolutions[coins[i]][i] = 1L;
+        partialSolutions[coins[i]][coins.length] = 1L;
+      }
+    }
+
+    for (int i = 1; i <= number; i++) {
+      long total = partialSolutions[i][coins.length];
+      for (int j = 0; j < coins.length; j++) {
+        if (i - coins[j] > 0) {
+          final int diff = i - coins[j];
+          long sum = 0L;
+          for (int k = j; k < coins.length; k++) {
+            sum += partialSolutions[diff][k];
+          }
+          partialSolutions[i][j] = sum;
+          total += sum;
         }
-
+      }
+      partialSolutions[i][coins.length] = total;
     }
 
-    public static void main(String ... args) throws FileNotFoundException {
+    return partialSolutions[number][coins.length];
+  }
 
-        Scanner scanner = new Scanner(new File("src/main/resources/hackersRankTests/coinChangeTest1"));
+  public static void main(String... args) throws FileNotFoundException {
 
-        int number = scanner.nextInt();
-        int coinAmount = scanner.nextInt();
-        int[] coins = new int[coinAmount];
-        IntStream.range(0,coinAmount).forEach(index -> coins[index] = scanner.nextInt());
+    Scanner scanner = new Scanner(new File("src/main/resources/hackersRankTests/CoinChangeTest1"));
 
-        findSolution(number, coins);
+    int number = scanner.nextInt();
+    int coinAmount = scanner.nextInt();
+    int[] coins = new int[coinAmount];
+    IntStream.range(0, coinAmount).forEach(index -> coins[index] = scanner.nextInt());
 
-    }
+    System.out.println(findSolution(number, coins));
+  }
 }
