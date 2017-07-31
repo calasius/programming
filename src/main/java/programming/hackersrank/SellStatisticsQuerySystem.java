@@ -2,17 +2,17 @@ package programming.hackersrank;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.regex.MatchResult;
 
 /** Created by claudio on 7/30/17. */
 public class SellStatisticsQuerySystem {
 
   public static void main(String... args) throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File("src/main/resources/hackersRankTests/olx2"));
+    Scanner scanner = new Scanner(new File("src/main/resources/hackersRankTests/olx4"));
     int lines = scanner.nextInt();
+    scanner.nextLine();
 
     DayCounter dayCounter = new DayCounter();
 
@@ -153,7 +153,7 @@ class ProductCounter {
 
     if (product == -1) {
       return stateCounter.getCount(state, region);
-    } else if (state == -1) {
+    } else if (state == -1 && !category.isPresent()) {
       return counterByProduct.get(product).getCount();
     } else if (!category.isPresent()) {
       return counterByProductState.get(product).getCount(state, region);
