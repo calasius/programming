@@ -28,6 +28,8 @@ public class FraudulentActivityNotifications {
     return 0;
   }
 
+  public static int[] mediansOfMedians(int[] A, int pivot) {}
+
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int n = in.nextInt();
